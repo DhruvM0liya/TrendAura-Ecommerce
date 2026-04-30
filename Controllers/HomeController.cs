@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Data;
-using Mobile_Store.Models;
+using trendaura.Data;
+using trendaura.Models;
 
-namespace Mobile_Store.Controllers
+namespace trendaura.Controllers
 {
     public class HomeController : Controller
     {

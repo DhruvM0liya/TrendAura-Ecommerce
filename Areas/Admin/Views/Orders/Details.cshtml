@@ -1,4 +1,4 @@
-@model Mobile_Store.Models.Order
+@model trendaura.Models.Order
 @{
     ViewData["Title"] = "Order Details";
 }
@@ -95,6 +95,7 @@
         <div class="admin-card">
             <h5 class="mb-3">Update Order Status</h5>
             <form asp-area="Admin" asp-controller="Orders" asp-action="UpdateStatus" method="post">
+                @Html.AntiForgeryToken()
                 <input type="hidden" name="id" value="@Model.Id" />
                 <div class="mb-3">
                     <label class="form-label">Order Status</label>
@@ -107,6 +108,25 @@
                 </div>
                 <button type="submit" class="btn btn-primary w-100">
                     <i class="fa-solid fa-sync me-2"></i>Update Status
+                </button>
+            </form>
+
+            <hr class="my-3" />
+
+            <h5 class="mb-3">Update Payment Status</h5>
+            <form asp-area="Admin" asp-controller="Orders" asp-action="UpdatePaymentStatus" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <div class="mb-3">
+                    <label class="form-label">Payment Status</label>
+                    <select name="paymentStatus" class="form-select">
+                        <option value="Pending" selected="@(Model.PaymentStatus == "Pending")">Pending</option>
+                        <option value="Processing" selected="@(Model.PaymentStatus == "Processing")">Processing</option>
+                        <option value="Paid" selected="@(Model.PaymentStatus == "Paid")">Paid</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-warning w-100">
+                    <i class="fa-solid fa-credit-card me-2"></i>Update Payment
                 </button>
             </form>
 

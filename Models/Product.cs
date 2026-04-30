@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mobile_Store.Models
+namespace trendaura.Models
 {
     public class Product
     {

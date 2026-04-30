@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Data;
-using Mobile_Store.Models;
+using trendaura.Data;
+using trendaura.Models;
 
-namespace Mobile_Store.Areas.Admin.Controllers
+namespace trendaura.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "AdminCookie", Roles = "Admin")]
@@ -193,6 +193,30 @@ namespace Mobile_Store.Areas.Admin.Controllers
                 var p = await _db.Products.FindAsync(id);
                 if (p != null)
                 {
+                    // Delete all cart items referencing this product
+                    var cartItems = await _db.CartItems
+                        .Where(ci => ci.ProductId == id)
+                        .ToListAsync();
+                    _db.CartItems.RemoveRange(cartItems);
+                    
+                    // Delete all wishlist items referencing this product
+                    var wishlistItems = await _db.Wishlists
+                        .Where(w => w.ProductId == id)
+                        .ToListAsync();
+                    _db.Wishlists.RemoveRange(wishlistItems);
+                    
+                    // Delete all reviews for this product
+                    var reviews = await _db.Reviews
+                        .Where(r => r.ProductId == id)
+                        .ToListAsync();
+                    _db.Reviews.RemoveRange(reviews);
+                    
+                    // Delete all order items referencing this product
+                    var orderItems = await _db.OrderItems
+                        .Where(oi => oi.ProductId == id)
+                        .ToListAsync();
+                    _db.OrderItems.RemoveRange(orderItems);
+
                     // Delete image file if exists
                     if (!string.IsNullOrEmpty(p.ImageUrl))
                     {
@@ -207,9 +231,10 @@ namespace Mobile_Store.Areas.Admin.Controllers
                         }
                     }
 
+                    // Finally delete the product
                     _db.Products.Remove(p);
                     await _db.SaveChangesAsync();
-                    TempData["success"] = "Product deleted successfully!";
+                    TempData["success"] = "Product and related data deleted successfully!";
                 }
                 else
                 {

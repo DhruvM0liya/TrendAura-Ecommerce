@@ -1,14 +1,24 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Data;
-using Mobile_Store.Models;
+using trendaura.Data;
+using trendaura.Models;
+using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Read connection string explicitly so we can log/inspect and enable retry on failure
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                       ?? throw new InvalidOperationException("DefaultConnection not configured.");
+
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        // Enable transient fault handling
+        sqlOptions.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(10), errorNumbersToAdd: null);
+        sqlOptions.CommandTimeout(180);
+    }));
 
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -31,7 +41,7 @@ builder.Services.AddAuthentication(options =>
 .AddCookie("AdminCookie", options =>
 {
     // Admin-specific cookie configuration
-    options.Cookie.Name = ".MobileStore.Admin";
+    options.Cookie.Name = ".TrendAura.Admin";
     options.LoginPath = "/Admin/Auth/Login";
     options.AccessDeniedPath = "/Admin/Auth/Login";
     options.SlidingExpiration = true;
@@ -44,7 +54,7 @@ builder.Services.AddAuthentication(options =>
 // Configure Identity's default cookie
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.Cookie.Name = ".MobileStore.Client";
+    options.Cookie.Name = ".TrendAura.Client";
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/AccessDenied";
     options.SlidingExpiration = true;
@@ -63,7 +73,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
     options.IdleTimeout = TimeSpan.FromDays(7);
-    options.Cookie.Name = ".MobileStore.Session";
+    options.Cookie.Name = ".TrendAura.Session";
 });
 
 // Configure file upload size limits
@@ -74,6 +84,18 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(optio
 
 var app = builder.Build();
 
+// Log database info early so we can see what the app will try to connect to
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+try
+{
+    var builderCs = new SqlConnectionStringBuilder(connectionString);
+    logger.LogInformation("Using SQL Server: {DataSource}, Database: {InitialCatalog}", builderCs.DataSource, builderCs.InitialCatalog);
+}
+catch
+{
+    logger.LogInformation("Using connection string from configuration (could not parse details)");
+}
+
 // Auto-create or migrate database on startup
 using (var scope = app.Services.CreateScope())
 {
@@ -81,14 +103,16 @@ using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
         var db = services.GetRequiredService<ApplicationDbContext>();
-        var migrations = db.Database.GetMigrations();
-        if (migrations != null && migrations.Any())
+
+        // Apply migrations (async) with helpful error handling for login failures
+        try
         {
-            db.Database.Migrate();
+            await db.Database.MigrateAsync();
         }
-        else
+        catch (SqlException sqlEx)
         {
-            db.Database.EnsureCreated();
+            logger.LogError(sqlEx, "SQL error while applying migrations. Check connection string and database permissions.");
+            throw; // rethrow so the app won't start with a broken DB
         }
 
         // Seed admin user and roles
@@ -96,8 +120,10 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+        var loggerScope = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        loggerScope.LogError(ex, "An error occurred while migrating or seeding the database.");
+        // Rethrow so the host fails fast and you can see the error in console/IDE
+        throw;
     }
 }
 

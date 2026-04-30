@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Data;
-using Mobile_Store.Models;
+using trendaura.Data;
+using trendaura.Models;
 
-namespace Mobile_Store.Areas.Admin.Controllers
+namespace trendaura.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "AdminCookie", Roles = "Admin")]
@@ -51,6 +51,25 @@ namespace Mobile_Store.Areas.Admin.Controllers
                 TempData["success"] = "Order status updated successfully!";
             }
             return RedirectToAction("Details", new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdatePaymentStatus(int id, string paymentStatus)
+        {
+            var order = await _db.Orders.FindAsync(id);
+            if (order != null)
+            {
+                order.PaymentStatus = paymentStatus;
+                // If marking Paid, also set Status to Processing if it was Pending (optional)
+                if (paymentStatus == "Paid" && order.Status == "Pending")
+                {
+                    order.Status = "Processing";
+                }
+                await _db.SaveChangesAsync();
+                TempData["success"] = "Payment status updated successfully!";
+            }
+            return RedirectToAction("Index");
         }
     }
 }

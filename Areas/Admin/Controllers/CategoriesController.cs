@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Data;
-using Mobile_Store.Models;
+using trendaura.Data;
+using trendaura.Models;
 
-namespace Mobile_Store.Areas.Admin.Controllers
+namespace trendaura.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "AdminCookie", Roles = "Admin")]
@@ -60,12 +60,47 @@ namespace Mobile_Store.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var cat = await _db.Categories.FindAsync(id);
+            var cat = await _db.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            
             if (cat != null)
             {
-                _db.Categories.Remove(cat);
-                await _db.SaveChangesAsync();
-                TempData["success"] = "Category deleted.";
+                try
+                {
+                    // Get all products in this category
+                    var productIds = cat.Products?.Select(p => p.Id).ToList() ?? new List<int>();
+                    
+                    if (productIds.Any())
+                    {
+                        // Delete all cart items referencing these products
+                        var cartItemsToDelete = await _db.CartItems
+                            .Where(ci => productIds.Contains(ci.ProductId))
+                            .ToListAsync();
+                        _db.CartItems.RemoveRange(cartItemsToDelete);
+                        
+                        // Delete all wishlist items referencing these products
+                        var wishlistItemsToDelete = await _db.Wishlists
+                            .Where(w => productIds.Contains(w.ProductId))
+                            .ToListAsync();
+                        _db.Wishlists.RemoveRange(wishlistItemsToDelete);
+                        
+                        // Delete all reviews for these products
+                        var reviewsToDelete = await _db.Reviews
+                            .Where(r => productIds.Contains(r.ProductId))
+                            .ToListAsync();
+                        _db.Reviews.RemoveRange(reviewsToDelete);
+                    }
+                    
+                    // Now delete the category and its products
+                    _db.Categories.Remove(cat);
+                    await _db.SaveChangesAsync();
+                    TempData["success"] = "Category and related products deleted successfully.";
+                }
+                catch (Exception ex)
+                {
+                    TempData["error"] = $"Error deleting category: {ex.Message}";
+                }
             }
             return RedirectToAction("Index");
         }

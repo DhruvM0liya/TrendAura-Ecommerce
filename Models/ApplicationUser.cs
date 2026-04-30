@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace Mobile_Store.Models
+namespace trendaura.Models
 {
     public class ApplicationUser : IdentityUser
     {

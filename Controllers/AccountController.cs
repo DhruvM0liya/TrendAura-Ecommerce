@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Mobile_Store.Models;
 using Mobile_Store.ViewModels;
+using trendaura.Data;
+using trendaura.Models;
 
-namespace Mobile_Store.Controllers
+namespace trendaura.Controllers
 {
     public class AccountController : Controller
     {

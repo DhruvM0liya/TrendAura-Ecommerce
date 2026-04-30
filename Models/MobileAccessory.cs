@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Mobile_Store.Models
+namespace trendaura.Models
 {
     public class MobileAccessory
     {

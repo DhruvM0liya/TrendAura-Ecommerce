@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Data;
-using Mobile_Store.Models;
+using trendaura.Data;
+using trendaura.Models;
 using System.Security.Claims;
 
-namespace Mobile_Store.Controllers
+namespace trendaura.Controllers
 {
     [Authorize]
     public class CartController : Controller

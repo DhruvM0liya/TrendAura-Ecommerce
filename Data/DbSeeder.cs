@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
-using Mobile_Store.Models;
+using trendaura.Models;
 
-namespace Mobile_Store.Data
+namespace trendaura.Data
 {
     public static class DbSeeder
     {
@@ -30,7 +30,7 @@ namespace Mobile_Store.Data
                 adminUser = new ApplicationUser
                 {
                     UserName = "admin",
-                    Email = "admin@mobilestore.com",
+                    Email = "admin@trendaura.com",
                     FullName = "System Administrator",
                     EmailConfirmed = true
                 };
@@ -43,6 +43,7 @@ namespace Mobile_Store.Data
                     await userManager.AddToRoleAsync(adminUser, "Admin");
                     Console.WriteLine("? Admin user created successfully!");
                     Console.WriteLine("   Username: admin");
+                    Console.WriteLine("   Email: admin@trendaura.com");
                     Console.WriteLine("   Password: admin@123");
                 }
                 else
@@ -56,6 +57,34 @@ namespace Mobile_Store.Data
             }
             else
             {
+                var needsUpdate = false;
+
+                // Update email if it differs
+                if (!string.Equals(adminUser.Email, "admin@trendaura.com", StringComparison.OrdinalIgnoreCase))
+                {
+                    adminUser.Email = "admin@trendaura.com";
+                    adminUser.NormalizedEmail = "ADMIN@TRENDAURA.COM";
+                    adminUser.EmailConfirmed = true;
+                    needsUpdate = true;
+                }
+
+                if (needsUpdate)
+                {
+                    var updateResult = await userManager.UpdateAsync(adminUser);
+                    if (updateResult.Succeeded)
+                    {
+                        Console.WriteLine("? Admin user email updated to admin@trendaura.com");
+                    }
+                    else
+                    {
+                        Console.WriteLine("? Failed to update admin user email:");
+                        foreach (var error in updateResult.Errors)
+                        {
+                            Console.WriteLine($"   - {error.Description}");
+                        }
+                    }
+                }
+
                 // Ensure admin user has Admin role
                 if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
                 {

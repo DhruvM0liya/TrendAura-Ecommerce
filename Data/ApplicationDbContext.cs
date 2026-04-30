@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Models;
+using trendaura.Models;
 
-namespace Mobile_Store.Data
+namespace trendaura.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -92,4 +92,4 @@ namespace Mobile_Store.Data
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
-}
+}    

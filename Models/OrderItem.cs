@@ -1,4 +1,4 @@
-namespace Mobile_Store.Models
+namespace trendaura.Models
 {
     public class OrderItem
     {

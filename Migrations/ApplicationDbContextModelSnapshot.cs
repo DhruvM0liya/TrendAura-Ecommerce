@@ -718,7 +718,7 @@ namespace Mobile_Store.Migrations
             modelBuilder.Entity("Mobile_Store.Models.Product", b =>
                 {
                     b.HasOne("Mobile_Store.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -760,6 +760,11 @@ namespace Mobile_Store.Migrations
                     b.Navigation("MobileAccessory");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Mobile_Store.Models.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Mobile_Store.Models.MobileAccessory", b =>

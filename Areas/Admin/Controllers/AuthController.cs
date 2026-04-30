@@ -95,7 +95,7 @@ namespace Mobile_Store.Areas.Admin.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, adminUser.UserName ?? model.Username),
-                    new Claim(ClaimTypes.Email, adminUser.Email ?? "admin@mobilestore.com"),
+                    new Claim(ClaimTypes.Email, adminUser.Email ?? "admin@trendaura.com"),
                     new Claim(ClaimTypes.NameIdentifier, adminUser.Id),
                     new Claim(ClaimTypes.Role, "Admin"),
                     new Claim("FullName", adminUser.FullName ?? model.Username),
