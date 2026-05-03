@@ -25,7 +25,7 @@ namespace trendaura.Areas.Admin.Controllers
                 reviewsQuery = reviewsQuery.Where(r => r.ProductId == productId.Value);
             }
 
-            var model = new Mobile_Store.ViewModels.AdminReviewsViewModel
+            var model = new trendaura.ViewModels.AdminReviewsViewModel
             {
                 Reviews = await reviewsQuery.ToListAsync(),
                 Products = await _db.Products.ToListAsync(),

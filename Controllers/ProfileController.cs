@@ -2,12 +2,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Data;
-using Mobile_Store.Models;
-using Mobile_Store.ViewModels;
+using trendaura.Data;
+using trendaura.Models;
+using trendaura.ViewModels;
 using System.Security.Claims;
 
-namespace Mobile_Store.Controllers
+namespace trendaura.Controllers
 {
     [Authorize]
     public class ProfileController : Controller

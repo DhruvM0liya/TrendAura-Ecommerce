@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Mobile_Store.ViewModels
+namespace trendaura.ViewModels
 {
     public class AddReviewViewModel
     {

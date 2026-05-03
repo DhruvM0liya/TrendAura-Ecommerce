@@ -27,7 +27,7 @@ Removed migrations that were causing conflicts:
 
 ### Step 3: Drop and Recreate Database
 ```powershell
-cd F:\Raj\Raj\Mobile_Store
+cd F:\Raj\Raj\trendaura
 dotnet ef database drop -f
 ```
 
@@ -90,7 +90,7 @@ All migrations were successfully applied:
 - dotnet-ef CLI tool
 
 ### Steps
-1. Open terminal in project root: `F:\Raj\Raj\Mobile_Store`
+1. Open terminal in project root: `F:\Raj\Raj\trendaura`
 2. Build the project:
    ```powershell
    dotnet build

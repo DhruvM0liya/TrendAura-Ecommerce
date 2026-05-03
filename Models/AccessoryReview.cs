@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,5 +19,10 @@ namespace trendaura.Models
         public int Rating { get; set; }
 
         public string? Comment { get; set; }
+
+        // Nayi properties jo missing thi
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string? ReviewerName { get; set; }
+        public bool IsVerifiedPurchase { get; set; }
     }
 }

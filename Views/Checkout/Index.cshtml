@@ -1,7 +1,7 @@
-@model Mobile_Store.ViewModels.CheckoutViewModel
+@model trendaura.ViewModels.CheckoutViewModel
 @{
     ViewData["Title"] = "Checkout";
-    var items = ViewBag.CartItems as IEnumerable<Mobile_Store.Models.CartItem>;
+    var items = ViewBag.CartItems as IEnumerable<trendaura.Models.CartItem>;
     var total = (decimal)ViewBag.Total;
 }
 

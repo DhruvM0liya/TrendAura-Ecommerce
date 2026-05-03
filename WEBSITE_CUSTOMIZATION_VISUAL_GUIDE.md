@@ -2,13 +2,13 @@
 
 ## Changes Overview
 
-### ? Change #1: Website Name - Mobile_Store ? TrendAura
+### ? Change #1: Website Name - trendaura ? TrendAura
 
 #### Location 1: Navigation Bar
 **Before:**
 ```
 ???????????????????????????????????????????
-? [MS] Mobile_Store                       ?
+? [MS] trendaura                       ?
 ???????????????????????????????????????????
 ```
 
@@ -22,7 +22,7 @@
 #### Location 2: Page Title (Browser Tab)
 **Before:**
 ```
-Page Title: Home - Mobile_Store
+Page Title: Home - trendaura
 ```
 
 **After:**
@@ -34,7 +34,7 @@ Page Title: Home - TrendAura
 **Before:**
 ```
 ???????????????????
-? Mobile_Store    ?
+? trendaura    ?
 ? A premium...    ?
 ???????????????????
 ```
@@ -50,7 +50,7 @@ Page Title: Home - TrendAura
 #### Location 4: Footer Copyright
 **Before:**
 ```
-© 2024 Mobile_Store. All rights reserved.
+© 2024 trendaura. All rights reserved.
 ```
 
 **After:**
@@ -101,11 +101,11 @@ Page Title: Home - TrendAura
 
 ### 1. Views/Shared/_Layout.cshtml
 **Changes Made:**
-- Line 5: `<title>@title - Mobile_Store</title>` ? `<title>@title - TrendAura</title>`
+- Line 5: `<title>@title - trendaura</title>` ? `<title>@title - TrendAura</title>`
 - Line 20: `<span class="brand-logo">MS</span>` ? `<span class="brand-logo">TA</span>`
-- Line 21: `<span class="ms-2 brand-text">Mobile_Store</span>` ? `<span class="ms-2 brand-text">TrendAura</span>`
-- Line 94: `<h5 class="text-cream">Mobile_Store</h5>` ? `<h5 class="text-cream">TrendAura</h5>`
-- Line 113: `&copy; @DateTime.Now.Year Mobile_Store.` ? `&copy; @DateTime.Now.Year TrendAura.`
+- Line 21: `<span class="ms-2 brand-text">trendaura</span>` ? `<span class="ms-2 brand-text">TrendAura</span>`
+- Line 94: `<h5 class="text-cream">trendaura</h5>` ? `<h5 class="text-cream">TrendAura</h5>`
+- Line 113: `&copy; @DateTime.Now.Year trendaura.` ? `&copy; @DateTime.Now.Year TrendAura.`
 
 **Impact:** 
 - Global website branding updated
@@ -126,7 +126,7 @@ Page Title: Home - TrendAura
 
 ### Navigation Bar
 ```
-Before: [MS] Mobile_Store  Navigation Menu
+Before: [MS] trendaura  Navigation Menu
 After:  [TA] TrendAura     Navigation Menu
         ? Logo change      ? Text change
 ```
@@ -158,10 +158,10 @@ After:
 | Component | Before | After |
 |-----------|--------|-------|
 | **Logo** | MS | TA |
-| **Brand Name** | Mobile_Store | TrendAura |
-| **Page Title** | Mobile_Store | TrendAura |
-| **Footer Heading** | Mobile_Store | TrendAura |
-| **Copyright** | Mobile_Store | TrendAura |
+| **Brand Name** | trendaura | TrendAura |
+| **Page Title** | trendaura | TrendAura |
+| **Footer Heading** | trendaura | TrendAura |
+| **Copyright** | trendaura | TrendAura |
 | **Category Icon** | ?? Visible | Removed |
 
 ---
@@ -210,7 +210,7 @@ After:
 
 ## Summary
 
-**Website Name Rebrand:** Mobile_Store ? TrendAura
+**Website Name Rebrand:** trendaura ? TrendAura
 - Complete branding update across all pages
 - Logo changed from MS to TA
 - Professional and modern appearance
@@ -229,7 +229,7 @@ After:
 To revert these changes:
 
 1. In `Views/Shared/_Layout.cshtml`:
-   - Replace all instances of "TrendAura" with "Mobile_Store"
+   - Replace all instances of "TrendAura" with "trendaura"
    - Change "TA" back to "MS"
 
 2. In `Views/Home/Index.cshtml`:

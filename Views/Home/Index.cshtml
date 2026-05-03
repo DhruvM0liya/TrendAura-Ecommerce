@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Mobile_Store.Models.Product>
+﻿@model IEnumerable<trendaura.Models.Product>
 @{
     ViewData["Title"] = "Home";
 }
@@ -58,7 +58,7 @@
         <div class="categories-grid">
             @if (ViewBag.Categories != null)
             {
-                foreach (var c in ViewBag.Categories as List<Mobile_Store.Models.Category>)
+                foreach (var c in ViewBag.Categories as List<trendaura.Models.Category>)
                 {
                     <div class="col-auto">
                         <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@c.Id" class="text-decoration-none">

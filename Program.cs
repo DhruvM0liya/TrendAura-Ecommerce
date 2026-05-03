@@ -127,8 +127,10 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Ensure wwwroot/images directory exists
-var imagesPath = Path.Combine(app.Environment.WebRootPath, "images");
+// Ensure wwwroot/images directory exists safely
+var webRootPath = app.Environment.WebRootPath ?? Path.Combine(app.Environment.ContentRootPath, "wwwroot");
+var imagesPath = Path.Combine(webRootPath, "images");
+
 if (!Directory.Exists(imagesPath))
 {
     Directory.CreateDirectory(imagesPath);

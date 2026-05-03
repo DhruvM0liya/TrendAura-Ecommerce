@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using trendaura.Data;
 using trendaura.Models;
+using trendaura.ViewModels; // Model mismatch error fix karne ke liye zaroori hai
 
 namespace trendaura.Controllers
 {
@@ -16,7 +18,7 @@ namespace trendaura.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Get featured products (up to 8)
+            // Featured products loading logic
             var featuredProducts = await _db.Products
                 .Include(p => p.Category)
                 .Include(p => p.Reviews)
@@ -24,7 +26,6 @@ namespace trendaura.Controllers
                 .Take(8)
                 .ToListAsync();
 
-            // Get categories for the category section
             ViewBag.Categories = await _db.Categories.ToListAsync();
 
             return View(featuredProducts);
@@ -42,8 +43,8 @@ namespace trendaura.Controllers
                 .Include(p => p.Category)
                 .Include(p => p.Reviews)
                 .ToListAsync();
-            var categories = await _db.Categories.ToListAsync();
-            ViewBag.Categories = categories;
+
+            ViewBag.Categories = await _db.Categories.ToListAsync();
             return View(products);
         }
 
@@ -54,18 +55,31 @@ namespace trendaura.Controllers
                 .Include(p => p.Category)
                 .Include(p => p.Reviews)
                 .ToListAsync();
+
             ViewBag.Query = q;
             return View(products);
         }
 
         public async Task<IActionResult> Details(int id)
         {
+            // Product ko include karte hain uski category aur AccessoryReviews ke saath
             var product = await _db.Products
                 .Include(p => p.Category)
-                .Include(p => p.Reviews)
+                .Include(p => p.Reviews) // Yahan check karein agar model mein iska naam AccessoryReviews hai
                 .FirstOrDefaultAsync(p => p.Id == id);
+
             if (product == null) return NotFound();
-            return View(product);
+
+            // FIXED: Correcting property names to match your DB (AccessoryReview)
+            var viewModel = new ProductReviewsViewModel
+            {
+                Product = product,
+                // Yahan AccessoryReview use karna hai
+                Reviews = product.Reviews?.ToList() ?? new List<AccessoryReview>(),
+                NewReview = new AccessoryReview { AccessoryId = id }
+            };
+
+            return View(viewModel);
         }
     }
 }

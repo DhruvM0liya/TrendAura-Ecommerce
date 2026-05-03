@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Mobile_Store.Migrations
+namespace trendaura.Migrations
 {
     /// <inheritdoc />
     public partial class AutoFixes_CheckAndAdd : Migration

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mobile_Store.Data;
+using trendaura.Data;
 
-namespace Mobile_Store.Areas.Admin.Controllers
+namespace trendaura.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "AdminCookie", Roles = "Admin")]

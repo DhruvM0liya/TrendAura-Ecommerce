@@ -1,10 +1,6 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// trendaura Frontend JavaScript
 
-// Write your JavaScript code.
-// Mobile_Store Frontend JavaScript
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize cart and wishlist badges
     updateCartBadge();
     updateWishlistBadge();
@@ -21,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add to cart animation feedback
     const addToCartButtons = document.querySelectorAll('button[type="submit"]');
     addToCartButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             const icon = this.querySelector('i.fa-cart-plus');
             if (icon) {
                 icon.classList.add('fa-bounce');
@@ -80,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setSelected();
             });
 
-            label.addEventListener('click', function(e) {
+            label.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 const radio = starWrap.querySelector(`#${label.htmlFor}`);
@@ -154,38 +150,44 @@ function updateWishlistBadge() {
     }
 }
 
-/**
- * Update cart badge from external source
- * Call this function when cart is updated via API or form submission
- */
 function setCartCount(count) {
     localStorage.setItem('cartCount', count);
     sessionStorage.setItem('cartCount', count);
     updateCartBadge();
 }
 
-/**
- * Update wishlist badge from external source
- * Call this function when wishlist is updated via API or form submission
- */
 function setWishlistCount(count) {
     localStorage.setItem('wishlistCount', count);
     sessionStorage.setItem('wishlistCount', count);
     updateWishlistBadge();
 }
 
-/**
- * Increment cart count
- */
 function incrementCartCount() {
     const current = parseInt(localStorage.getItem('cartCount') || '0');
     setCartCount(current + 1);
 }
 
-/**
- * Increment wishlist count
- */
 function incrementWishlistCount() {
     const current = parseInt(localStorage.getItem('wishlistCount') || '0');
     setWishlistCount(current + 1);
+}
+
+// FIX: Cart Quantity Update Function
+function updateQty(btn, change) {
+    var container = btn.closest('.input-group');
+    if (!container) return;
+
+    var input = container.querySelector('input[name="qty"]');
+    if (!input) return;
+
+    var currentValue = parseInt(input.value);
+    var min = parseInt(input.getAttribute('min')) || 1;
+    var max = parseInt(input.getAttribute('max'));
+
+    var newValue = currentValue + change;
+
+    if (newValue >= min && (isNaN(max) || newValue <= max)) {
+        input.value = newValue;
+        input.form.submit();
+    }
 }

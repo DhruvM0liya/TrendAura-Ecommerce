@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using trendaura.Data;
 using trendaura.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace trendaura.Areas.Admin.Controllers
 {

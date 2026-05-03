@@ -9,7 +9,7 @@ Your website has been successfully customized with the following changes:
 ## ?? Changes Made
 
 ### 1. Website Name
-- **Changed:** Mobile_Store ? **TrendAura**
+- **Changed:** trendaura ? **TrendAura**
 - **Logo:** MS ? **TA**
 - **Applied to:** All pages globally
 
@@ -80,7 +80,7 @@ Four documents have been created:
 
 ### Navbar
 ```
-Before: [MS] Mobile_Store
+Before: [MS] trendaura
 After:  [TA] TrendAura
 ```
 

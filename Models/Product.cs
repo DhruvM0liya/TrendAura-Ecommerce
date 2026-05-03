@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
@@ -8,10 +9,14 @@ namespace trendaura.Models
     public class Product
     {
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; } = null!;
+
         public string? Description { get; set; }
+
         public decimal Price { get; set; }
+
         public string? ImageUrl { get; set; }
 
         [ForeignKey("Category")]
@@ -20,7 +25,9 @@ namespace trendaura.Models
 
         public int Stock { get; set; } = 100;
 
-        public ICollection<Review>? Reviews { get; set; }
+        // FIX: EF Core ab database query karte waqt 'ProductId' ki jagah 'AccessoryId' dhoondhega
+        [ForeignKey("AccessoryId")]
+        public virtual ICollection<AccessoryReview> Reviews { get; set; } = new List<AccessoryReview>();
 
         [NotMapped]
         public double AverageRating => Reviews != null && Reviews.Any()

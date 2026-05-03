@@ -1,6 +1,6 @@
-using Mobile_Store.Models;
+using trendaura.Models;
 
-namespace Mobile_Store.ViewModels
+namespace trendaura.ViewModels
 {
     public class AdminReviewsViewModel
     {

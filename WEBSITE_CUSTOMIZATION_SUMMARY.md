@@ -2,15 +2,15 @@
 
 ## Changes Made
 
-### 1. Website Name Changed: Mobile_Store ? TrendAura
+### 1. Website Name Changed: trendaura ? TrendAura
 
 **Files Modified:**
 - `Views/Shared/_Layout.cshtml`
 
 **Changes:**
-- Updated page title from "Mobile_Store" to "TrendAura"
+- Updated page title from "trendaura" to "TrendAura"
 - Changed brand logo text from "MS" to "TA"
-- Changed brand name from "Mobile_Store" to "TrendAura" in navbar
+- Changed brand name from "trendaura" to "TrendAura" in navbar
 - Updated footer heading and copyright text
 
 **Locations Updated:**
@@ -56,7 +56,7 @@
 ## Visual Changes
 
 ### Website Name
-- **Before:** Mobile_Store
+- **Before:** trendaura
 - **After:** TrendAura
 - **Logo Update:** MS ? TA
 
@@ -111,7 +111,7 @@ All changes have been verified:
 ## Rollback (if needed)
 
 To revert these changes:
-1. Replace "TrendAura" with "Mobile_Store" in `Views/Shared/_Layout.cshtml`
+1. Replace "TrendAura" with "trendaura" in `Views/Shared/_Layout.cshtml`
 2. Change "TA" back to "MS" in brand logo
 3. Add the mobile icon back to `Views/Home/Index.cshtml`
 

@@ -1,4 +1,4 @@
-@model Mobile_Store.ViewModels.ProductReviewsViewModel
+@model trendaura.ViewModels.ProductReviewsViewModel
 @inject UserManager<ApplicationUser> _userManager
 @{
     ViewData["Title"] = Model.Product.Name;
@@ -185,7 +185,8 @@
                             </h5>
 
                             <form asp-controller="Review" asp-action="Add" method="post">
-                                <input type="hidden" asp-for="NewReview.ProductId" />
+                                <!-- FIX APPLIED HERE -->
+                                <input type="hidden" name="NewReview.AccessoryId" value="@Model.Product.Id" />
 
                                 <div class="mb-3">
                                     <label class="form-label" style="color: #FFC107;">Rating *</label>
@@ -203,10 +204,10 @@
 
                                 <div class="mb-3">
                                     <label asp-for="NewReview.Comment" class="form-label" style="color: #FFC107;">Your Review *</label>
-                                    <textarea asp-for="NewReview.Comment" class="form-control" rows="4"
-                                              placeholder="Share your experience with this product..."
-                                              maxlength="1000" required
-                                              style="background-color: #000; border: 1px solid #FFC107; color: #FFC107;"></textarea>
+                                    <textarea name="NewReview.Comment" class="form-control" rows="4"
+                                      placeholder="Share your experience with this product..."
+                                      maxlength="1000" required
+                                      style="background-color: #000; border: 1px solid #FFC107; color: #FFC107;"></textarea>
                                     <span asp-validation-for="NewReview.Comment" class="text-danger"></span>
                                     <small style="color: #FFC107;">Minimum 10 characters</small>
                                 </div>

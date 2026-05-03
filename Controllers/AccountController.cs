@@ -2,10 +2,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Mobile_Store.Models;
-using Mobile_Store.ViewModels;
-using trendaura.Data;
 using trendaura.Models;
+using trendaura.ViewModels;
+using trendaura.Data;
 
 namespace trendaura.Controllers
 {
@@ -47,7 +46,7 @@ namespace trendaura.Controllers
             {
                 // Assign Customer role
                 await _userManager.AddToRoleAsync(user, "Customer");
-                
+
                 _logger.LogInformation($"New user registered: {model.Email}");
                 TempData["success"] = "Registration successful! Please login.";
                 return RedirectToAction("Login");
@@ -82,15 +81,24 @@ namespace trendaura.Controllers
 
             // Sign in using Identity's default scheme (ClientCookie)
             var result = await _signInManager.PasswordSignInAsync(
-                model.Email, 
-                model.Password, 
-                model.RememberMe, 
+                model.Email,
+                model.Password,
+                model.RememberMe,
                 lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
                 _logger.LogInformation($"? Client '{model.Email}' logged in successfully!");
                 TempData["success"] = "Welcome back!";
+
+                // --- NAYA LOGIC YAHA ADD KIYA HAI ---
+                // Agar ReturnUrl me /Cart/Add hai (jo GET request se 405 error deta hai)
+                if (!string.IsNullOrEmpty(model.ReturnUrl) && model.ReturnUrl.Contains("/Cart/Add", StringComparison.OrdinalIgnoreCase))
+                {
+                    // User ko safely Home page (ya Products page) par bhej dein
+                    return RedirectToAction("Index", "Home");
+                }
+                // ------------------------------------
 
                 if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     return Redirect(model.ReturnUrl);

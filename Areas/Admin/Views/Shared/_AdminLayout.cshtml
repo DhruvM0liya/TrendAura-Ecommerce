@@ -26,35 +26,35 @@
             border-right: 2px solid #FFC107 !important;
         }
 
-        .admin-sidebar h4 {
-            color: #FFC107 !important;
-            font-weight: 700;
-        }
+            .admin-sidebar h4 {
+                color: #FFC107 !important;
+                font-weight: 700;
+            }
 
-        .admin-sidebar .nav-link {
-            color: #cccccc !important;
-            transition: all 0.3s ease;
-            border-radius: 6px;
-            margin-bottom: 4px;
-            border-left: 3px solid transparent;
-        }
+            .admin-sidebar .nav-link {
+                color: #cccccc !important;
+                transition: all 0.3s ease;
+                border-radius: 6px;
+                margin-bottom: 4px;
+                border-left: 3px solid transparent;
+            }
 
-        .admin-sidebar .nav-link:hover {
-            background: rgba(255, 193, 7, 0.1) !important;
-            color: #FFC107 !important;
-            border-left-color: #FFC107 !important;
-        }
+                .admin-sidebar .nav-link:hover {
+                    background: rgba(255, 193, 7, 0.1) !important;
+                    color: #FFC107 !important;
+                    border-left-color: #FFC107 !important;
+                }
 
-        .admin-sidebar .nav-link.active {
-            background: rgba(255, 193, 7, 0.2) !important;
-            font-weight: 600;
-            color: #FFC107 !important;
-            border-left-color: #FFC107 !important;
-        }
+                .admin-sidebar .nav-link.active {
+                    background: rgba(255, 193, 7, 0.2) !important;
+                    font-weight: 600;
+                    color: #FFC107 !important;
+                    border-left-color: #FFC107 !important;
+                }
 
-        .admin-sidebar hr {
-            border-color: rgba(255, 193, 7, 0.3) !important;
-        }
+            .admin-sidebar hr {
+                border-color: rgba(255, 193, 7, 0.3) !important;
+            }
 
         /* Main Content Area */
         .flex-grow-1 {
@@ -71,10 +71,10 @@
             color: #cccccc;
         }
 
-        .admin-top h4 {
-            color: #FFC107 !important;
-            font-weight: 700;
-        }
+            .admin-top h4 {
+                color: #FFC107 !important;
+                font-weight: 700;
+            }
 
         /* Badges */
         .badge {
@@ -90,10 +90,10 @@
             color: #FFC107 !important;
         }
 
-        .btn-outline-secondary:hover {
-            background-color: #FFC107 !important;
-            color: #000000 !important;
-        }
+            .btn-outline-secondary:hover {
+                background-color: #FFC107 !important;
+                color: #000000 !important;
+            }
 
         /* Alerts */
         .alert-success {
@@ -114,9 +114,53 @@
             opacity: 0.8;
         }
 
-        .btn-close:hover {
-            opacity: 1;
+            .btn-close:hover {
+                opacity: 1;
+            }
+
+        /* ==========================================
+                   100% WORKING TABLE HOVER FIX FOR ADMIN
+                   ========================================== */
+        .table {
+            --bs-table-hover-color: #ffffff !important;
+            --bs-table-hover-bg: rgba(255, 193, 7, 0.1) !important;
         }
+
+            .table tbody tr:hover td,
+            .table tbody tr:hover th,
+            .table-hover > tbody > tr:hover > * {
+                color: #ffffff !important;
+                box-shadow: inset 0 0 0 9999px var(--bs-table-hover-bg) !important;
+            }
+
+                /* TEXT KO WHITE KARO (LEKIN BUTTONS KO IGNORE KARO JAISE VIEW DETAILS) */
+                .table tbody tr:hover td a:not(.btn),
+                .table tbody tr:hover td span:not(.badge),
+                .table tbody tr:hover td strong,
+                .table tbody tr:hover td div,
+                .table tbody tr:hover td p {
+                    color: #ffffff !important;
+                }
+
+                .table tbody tr:hover td .text-muted {
+                    color: #cccccc !important;
+                }
+
+            /* ==========================================
+                   BUTTON TEXT COLOR FIX (HAMESHA BLACK RAKHNE KE LIYE)
+                   ========================================== */
+            /* Delete buttons ko chhod kar saare yellow buttons ka text black set karo */
+            .table td .btn:not(.btn-danger):not(.btn-outline-danger),
+            .table td a.btn:not(.btn-danger):not(.btn-outline-danger) {
+                color: #000000 !important;
+                font-weight: 600 !important;
+            }
+
+            /* Row hover par bhi button ka text black hi rahega */
+            .table tbody tr:hover td .btn:not(.btn-danger):not(.btn-outline-danger),
+            .table tbody tr:hover td a.btn:not(.btn-danger):not(.btn-outline-danger) {
+                color: #000000 !important;
+            }
 
         /* Responsive adjustments */
         @@media (max-width: 768px) {
@@ -139,10 +183,10 @@
 </head>
 <body>
     @{
-        // Try to set review count for sidebar badge. Use try/catch to avoid breaking layout if DB unavailable.
+        // Try to set review count for sidebar badge.
         try
         {
-            var db = Context.RequestServices.GetService(typeof(Mobile_Store.Data.ApplicationDbContext)) as Mobile_Store.Data.ApplicationDbContext;
+            var db = Context.RequestServices.GetService(typeof(trendaura.Data.ApplicationDbContext)) as trendaura.Data.ApplicationDbContext;
             if (db != null)
             {
                 ViewBag.AdminReviewCount = db.Reviews.Count();

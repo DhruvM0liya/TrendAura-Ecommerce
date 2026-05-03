@@ -123,7 +123,7 @@ table "dbo.CartItems", column 'ProductId'.
 ## File Structure Reference
 
 ```
-Mobile_Store/
+trendaura/
 ??? Areas/
 ?   ??? Admin/
 ?       ??? Controllers/
@@ -280,7 +280,7 @@ Mobile_Store/
 
 | Component | Version |
 |-----------|---------|
-| Project | Mobile_Store |
+| Project | trendaura |
 | .NET | 8.0 |
 | C# | 12.0 |
 | Framework | ASP.NET Core |

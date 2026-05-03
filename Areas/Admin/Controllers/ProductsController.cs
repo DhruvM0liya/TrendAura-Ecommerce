@@ -56,7 +56,7 @@ namespace trendaura.Areas.Admin.Controllers
                     // Validate file extension
                     var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
                     var fileExtension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
-                    
+
                     if (!allowedExtensions.Contains(fileExtension))
                     {
                         ModelState.AddModelError("", "Only image files (jpg, jpeg, png, gif, webp) are allowed.");
@@ -74,12 +74,12 @@ namespace trendaura.Areas.Admin.Controllers
 
                     var fileName = Guid.NewGuid().ToString() + fileExtension;
                     var filePath = Path.Combine(uploadsDir, fileName);
-                    
+
                     using (var fs = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(fs);
                     }
-                    
+
                     product.ImageUrl = "/images/" + fileName;
                 }
 
@@ -129,7 +129,7 @@ namespace trendaura.Areas.Admin.Controllers
                     // Validate file extension
                     var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
                     var fileExtension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
-                    
+
                     if (!allowedExtensions.Contains(fileExtension))
                     {
                         ModelState.AddModelError("", "Only image files (jpg, jpeg, png, gif, webp) are allowed.");
@@ -161,12 +161,12 @@ namespace trendaura.Areas.Admin.Controllers
 
                     var fileName = Guid.NewGuid().ToString() + fileExtension;
                     var filePath = Path.Combine(uploadsDir, fileName);
-                    
+
                     using (var fs = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(fs);
                     }
-                    
+
                     product.ImageUrl = "/images/" + fileName;
                 }
 
@@ -198,19 +198,19 @@ namespace trendaura.Areas.Admin.Controllers
                         .Where(ci => ci.ProductId == id)
                         .ToListAsync();
                     _db.CartItems.RemoveRange(cartItems);
-                    
+
                     // Delete all wishlist items referencing this product
                     var wishlistItems = await _db.Wishlists
                         .Where(w => w.ProductId == id)
                         .ToListAsync();
                     _db.Wishlists.RemoveRange(wishlistItems);
-                    
-                    // Delete all reviews for this product
-                    var reviews = await _db.Reviews
-                        .Where(r => r.ProductId == id)
+
+                    // FIX: 'Reviews' DbSet ki jagah 'AccessoryReviews' aur 'ProductId' ki jagah 'AccessoryId'
+                    var reviews = await _db.AccessoryReviews
+                        .Where(r => r.AccessoryId == id)
                         .ToListAsync();
-                    _db.Reviews.RemoveRange(reviews);
-                    
+                    _db.AccessoryReviews.RemoveRange(reviews);
+
                     // Delete all order items referencing this product
                     var orderItems = await _db.OrderItems
                         .Where(oi => oi.ProductId == id)
@@ -245,7 +245,7 @@ namespace trendaura.Areas.Admin.Controllers
             {
                 TempData["error"] = $"Error deleting product: {ex.Message}";
             }
-            
+
             return RedirectToAction("Index");
         }
     }

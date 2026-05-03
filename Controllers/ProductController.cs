@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using trendaura.Data;
 using trendaura.Models;
+using trendaura.ViewModels; // FIX: Ye namespace zaroori hai ViewModel use karne ke liye
 
 namespace trendaura.Controllers
 {
@@ -22,9 +23,22 @@ namespace trendaura.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var product = await _db.Products.Include(p => p.Category).Include(p => p.Reviews).FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _db.Products
+                .Include(p => p.Category)
+                .Include(p => p.Reviews)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
             if (product == null) return NotFound();
-            return View(product);
+
+            // FIX: Purane 'return View(product);' ki jagah ab hum ViewModel bhej rahe hain
+            var viewModel = new ProductReviewsViewModel
+            {
+                Product = product,
+                Reviews = product.Reviews?.ToList() ?? new List<AccessoryReview>(),
+                NewReview = new AccessoryReview { AccessoryId = id }
+            };
+
+            return View(viewModel);
         }
     }
 }

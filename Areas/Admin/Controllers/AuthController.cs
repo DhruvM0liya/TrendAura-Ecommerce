@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Mobile_Store.Models;
-using Mobile_Store.ViewModels;
+using trendaura.Models;
+using trendaura.ViewModels;
 using System.Security.Claims;
 
-namespace Mobile_Store.Areas.Admin.Controllers
+namespace trendaura.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "AdminCookie", Roles = "Admin")]

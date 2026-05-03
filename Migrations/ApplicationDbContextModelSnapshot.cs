@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Mobile_Store.Data;
+using trendaura.Data;
 
 #nullable disable
 
-namespace Mobile_Store.Migrations
+namespace trendaura.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -155,7 +155,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.AccessoryReview", b =>
+            modelBuilder.Entity("trendaura.Models.AccessoryReview", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -196,7 +196,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("AccessoryReviews", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.ApplicationUser", b =>
+            modelBuilder.Entity("trendaura.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -289,7 +289,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.CartItem", b =>
+            modelBuilder.Entity("trendaura.Models.CartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,7 +319,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("CartItems", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Category", b =>
+            modelBuilder.Entity("trendaura.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -339,7 +339,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.MobileAccessory", b =>
+            modelBuilder.Entity("trendaura.Models.MobileAccessory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,7 +398,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("MobileAccessories", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Order", b =>
+            modelBuilder.Entity("trendaura.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -453,7 +453,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("Orders", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.OrderItem", b =>
+            modelBuilder.Entity("trendaura.Models.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -482,7 +482,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("OrderItems", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Product", b =>
+            modelBuilder.Entity("trendaura.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -516,7 +516,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Review", b =>
+            modelBuilder.Entity("trendaura.Models.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -557,7 +557,7 @@ namespace Mobile_Store.Migrations
                     b.ToTable("Reviews", (string)null);
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Wishlist", b =>
+            modelBuilder.Entity("trendaura.Models.Wishlist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -598,7 +598,7 @@ namespace Mobile_Store.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.ApplicationUser", null)
+                    b.HasOne("trendaura.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -607,7 +607,7 @@ namespace Mobile_Store.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.ApplicationUser", null)
+                    b.HasOne("trendaura.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -622,7 +622,7 @@ namespace Mobile_Store.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mobile_Store.Models.ApplicationUser", null)
+                    b.HasOne("trendaura.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -631,22 +631,22 @@ namespace Mobile_Store.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.ApplicationUser", null)
+                    b.HasOne("trendaura.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.AccessoryReview", b =>
+            modelBuilder.Entity("trendaura.Models.AccessoryReview", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.MobileAccessory", "Accessory")
+                    b.HasOne("trendaura.Models.MobileAccessory", "Accessory")
                         .WithMany("Reviews")
                         .HasForeignKey("AccessoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mobile_Store.Models.ApplicationUser", "User")
+                    b.HasOne("trendaura.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -657,14 +657,14 @@ namespace Mobile_Store.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.CartItem", b =>
+            modelBuilder.Entity("trendaura.Models.CartItem", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.MobileAccessory", "MobileAccessory")
+                    b.HasOne("trendaura.Models.MobileAccessory", "MobileAccessory")
                         .WithMany()
                         .HasForeignKey("MobileAccessoryId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mobile_Store.Models.Product", "Product")
+                    b.HasOne("trendaura.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -674,9 +674,9 @@ namespace Mobile_Store.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.MobileAccessory", b =>
+            modelBuilder.Entity("trendaura.Models.MobileAccessory", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.Category", "Category")
+                    b.HasOne("trendaura.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -685,9 +685,9 @@ namespace Mobile_Store.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Order", b =>
+            modelBuilder.Entity("trendaura.Models.Order", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.ApplicationUser", "User")
+                    b.HasOne("trendaura.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -696,15 +696,15 @@ namespace Mobile_Store.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.OrderItem", b =>
+            modelBuilder.Entity("trendaura.Models.OrderItem", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.Order", "Order")
+                    b.HasOne("trendaura.Models.Order", "Order")
                         .WithMany("Items")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mobile_Store.Models.Product", "Product")
+                    b.HasOne("trendaura.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -715,9 +715,9 @@ namespace Mobile_Store.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Product", b =>
+            modelBuilder.Entity("trendaura.Models.Product", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.Category", "Category")
+                    b.HasOne("trendaura.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -726,15 +726,15 @@ namespace Mobile_Store.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Review", b =>
+            modelBuilder.Entity("trendaura.Models.Review", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.Product", "Product")
+                    b.HasOne("trendaura.Models.Product", "Product")
                         .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mobile_Store.Models.ApplicationUser", "User")
+                    b.HasOne("trendaura.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -745,14 +745,14 @@ namespace Mobile_Store.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Wishlist", b =>
+            modelBuilder.Entity("trendaura.Models.Wishlist", b =>
                 {
-                    b.HasOne("Mobile_Store.Models.MobileAccessory", "MobileAccessory")
+                    b.HasOne("trendaura.Models.MobileAccessory", "MobileAccessory")
                         .WithMany()
                         .HasForeignKey("MobileAccessoryId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mobile_Store.Models.Product", "Product")
+                    b.HasOne("trendaura.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -762,22 +762,22 @@ namespace Mobile_Store.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Category", b =>
+            modelBuilder.Entity("trendaura.Models.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.MobileAccessory", b =>
+            modelBuilder.Entity("trendaura.Models.MobileAccessory", b =>
                 {
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Order", b =>
+            modelBuilder.Entity("trendaura.Models.Order", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Mobile_Store.Models.Product", b =>
+            modelBuilder.Entity("trendaura.Models.Product", b =>
                 {
                     b.Navigation("Reviews");
                 });

@@ -1,4 +1,4 @@
-namespace Mobile_Store.ViewModels
+namespace trendaura.ViewModels
 {
     public class ReviewViewModel
     {

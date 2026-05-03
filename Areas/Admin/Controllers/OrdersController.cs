@@ -48,7 +48,7 @@ namespace trendaura.Areas.Admin.Controllers
             {
                 order.Status = status;
                 await _db.SaveChangesAsync();
-                TempData["success"] = "Order status updated successfully!";
+                TempData["success"] = $"Order status updated to '{status}' successfully!";
             }
             return RedirectToAction("Details", new { id });
         }
@@ -61,15 +61,16 @@ namespace trendaura.Areas.Admin.Controllers
             if (order != null)
             {
                 order.PaymentStatus = paymentStatus;
-                // If marking Paid, also set Status to Processing if it was Pending (optional)
+                // Agar payment "Paid" ho rahi hai aur order "Pending" tha, to usko automatically "Processing" kar do
                 if (paymentStatus == "Paid" && order.Status == "Pending")
                 {
                     order.Status = "Processing";
                 }
                 await _db.SaveChangesAsync();
-                TempData["success"] = "Payment status updated successfully!";
+                TempData["success"] = $"Payment status updated to '{paymentStatus}' successfully!";
             }
-            return RedirectToAction("Index");
+            // Pehle yaha Index tha, ab wapas Details page par hi jayega
+            return RedirectToAction("Details", new { id });
         }
     }
 }

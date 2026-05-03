@@ -3,7 +3,7 @@
 ## Changes Made ?
 
 ### 1. Website Name Changed
-**From:** Mobile_Store  
+**From:** trendaura  
 **To:** TrendAura  
 **Logo:** MS ? TA
 
@@ -26,7 +26,7 @@
 
 | File | Changes |
 |------|---------|
-| `Views/Shared/_Layout.cshtml` | Website name "Mobile_Store" ? "TrendAura" |
+| `Views/Shared/_Layout.cshtml` | Website name "trendaura" ? "TrendAura" |
 | `Views/Home/Index.cshtml` | Mobile icon removed from categories |
 
 ---
@@ -40,11 +40,11 @@
 
 ### In _Layout.cshtml:
 ```
-? Title: "Mobile_Store" ? "TrendAura"
+? Title: "trendaura" ? "TrendAura"
 ? Logo: "MS" ? "TA"
-? Brand text: "Mobile_Store" ? "TrendAura"
-? Footer: "Mobile_Store" ? "TrendAura"
-? Copyright: "Mobile_Store" ? "TrendAura"
+? Brand text: "trendaura" ? "TrendAura"
+? Footer: "trendaura" ? "TrendAura"
+? Copyright: "trendaura" ? "TrendAura"
 ```
 
 ### In Home/Index.cshtml:
@@ -60,10 +60,10 @@
 | Page Element | Before | After |
 |--------------|--------|-------|
 | Navbar Logo | MS | TA |
-| Navbar Text | Mobile_Store | TrendAura |
-| Browser Tab Title | Mobile_Store | TrendAura |
-| Footer Heading | Mobile_Store | TrendAura |
-| Footer Copyright | Mobile_Store | TrendAura |
+| Navbar Text | trendaura | TrendAura |
+| Browser Tab Title | trendaura | TrendAura |
+| Footer Heading | trendaura | TrendAura |
+| Footer Copyright | trendaura | TrendAura |
 | Category Icon | Visible | Hidden |
 
 ---

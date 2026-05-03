@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using trendaura.Data;
 using trendaura.Models;
 
@@ -38,9 +39,10 @@ namespace trendaura.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            var cat = await _db.Categories.FindAsync(id);
+            if (id == null) return NotFound();
+            var cat = await _db.Categories.FindAsync(id.Value);
             if (cat == null) return NotFound();
             return View(cat);
         }
@@ -58,48 +60,48 @@ namespace trendaura.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
+            if (id == null) return RedirectToAction("Index");
+
             var cat = await _db.Categories
                 .Include(c => c.Products)
-                .FirstOrDefaultAsync(c => c.Id == id);
-            
+                .FirstOrDefaultAsync(c => c.Id == id.Value);
+
             if (cat != null)
             {
                 try
                 {
-                    // Get all products in this category
                     var productIds = cat.Products?.Select(p => p.Id).ToList() ?? new List<int>();
-                    
+
                     if (productIds.Any())
                     {
-                        // Delete all cart items referencing these products
+                        // 1. Delete CartItems
                         var cartItemsToDelete = await _db.CartItems
-                            .Where(ci => productIds.Contains(ci.ProductId))
+                            .Where(ci => ci.ProductId.HasValue && productIds.Contains(ci.ProductId.Value))
                             .ToListAsync();
                         _db.CartItems.RemoveRange(cartItemsToDelete);
-                        
-                        // Delete all wishlist items referencing these products
+
+                        // 2. Delete Wishlist items
                         var wishlistItemsToDelete = await _db.Wishlists
-                            .Where(w => productIds.Contains(w.ProductId))
+                            .Where(w => w.ProductId.HasValue && productIds.Contains(w.ProductId.Value))
                             .ToListAsync();
                         _db.Wishlists.RemoveRange(wishlistItemsToDelete);
-                        
-                        // Delete all reviews for these products
-                        var reviewsToDelete = await _db.Reviews
-                            .Where(r => productIds.Contains(r.ProductId))
+
+                        // 3. Delete AccessoryReviews (Table name updated to AccessoryReviews)
+                        var reviewsToDelete = await _db.AccessoryReviews
+                            .Where(r => productIds.Contains(r.AccessoryId))
                             .ToListAsync();
-                        _db.Reviews.RemoveRange(reviewsToDelete);
+                        _db.AccessoryReviews.RemoveRange(reviewsToDelete);
                     }
-                    
-                    // Now delete the category and its products
+
                     _db.Categories.Remove(cat);
                     await _db.SaveChangesAsync();
-                    TempData["success"] = "Category and related products deleted successfully.";
+                    TempData["success"] = "Category deleted successfully.";
                 }
                 catch (Exception ex)
                 {
-                    TempData["error"] = $"Error deleting category: {ex.Message}";
+                    TempData["error"] = $"Error: {ex.Message}";
                 }
             }
             return RedirectToAction("Index");
