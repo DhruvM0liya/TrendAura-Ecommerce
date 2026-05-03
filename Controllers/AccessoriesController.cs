@@ -50,7 +50,14 @@ namespace trendaura.Controllers
 
                 // Sorting
                 accessories = sortBy switch
-                
+                {
+                    "price_asc" => accessories.OrderBy(m => m.Price),
+                    "price_desc" => accessories.OrderByDescending(m => m.Price),
+                    "name" => accessories.OrderBy(m => m.Name),
+                    "rating" => accessories.OrderByDescending(m => m.Reviews != null && m.Reviews.Any() 
+                        ? m.Reviews.Average(r => r.Rating) : 0),
+                    _ => accessories.OrderByDescending(m => m.CreatedAt)
+                };
 
                 // Get distinct brands for filter
                 ViewBag.Brands = await _db.MobileAccessories
